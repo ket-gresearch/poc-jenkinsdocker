@@ -16,6 +16,11 @@ Start-Process -FilePath ".\DockerInstaller.exe" -ArgumentList "install --quiet" 
 # Verify that Docker is installed
 docker version
 
+# Switch Docker to use Windows containers
+& $Env:ProgramFiles\Docker\Docker\DockerCli.exe -SwitchDaemon
+Restart-Service docker
+docker version
+
 # Restart the system to apply changes
 Restart-Computer -Force
 
