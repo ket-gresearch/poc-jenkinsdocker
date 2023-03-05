@@ -1,9 +1,6 @@
-# Use the official Jenkins LTS image as a base
-FROM jenkins/jenkins:lts
-
-# Set the Jenkins home directory and increase the JVM heap size
-ENV JENKINS_HOME /var/jenkins_home
-ENV JAVA_OPTS="-Xmx2048m"
-
-# Expose the Jenkins port
-EXPOSE 8080
+FROM jenkins/jenkins
+ENV JAVA_OPTS -Djenkins.install.runSetupWizard=false
+ENV CASC_JENKINS_CONFIG /var/jenkins_home/casc.yaml
+COPY plugins.txt /usr/share/jenkins/ref/plugins.txt
+RUN jenkins-plugin-cli -f /usr/share/jenkins/ref/plugins.txt
+COPY casc.yaml /var/jenkins_home/casc.yaml
